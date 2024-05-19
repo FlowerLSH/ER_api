@@ -1,6 +1,8 @@
 import requests
 import json
 
+headers = {"x-api-key" : "여기에 api키 입력"}
+
 # 유저 닉네임으로 id번호 받기
 def GetNickNum():
     nick = input("유저 닉네임 입력 : ")
@@ -47,3 +49,11 @@ def GetUserRank():
     else:
         print("API 요청 실패:", response.status_code)
         print(response.text)
+
+#유저 통계 획득(통계가 매우 기므로 주의)
+def GetUserStats():
+    userNum = int(input("유저 번호 입력 : "))
+    url = "https://open-api.bser.io/v1/user/games/%d"%(userNum)
+
+response = requests.get(url, headers = headers)
+print(response.text)
