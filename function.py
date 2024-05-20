@@ -4,8 +4,7 @@ import json
 headers = {"x-api-key" : "여기에 api키 입력"}
 
 # 유저 닉네임으로 id번호 받기
-def GetNickNum():
-    nick = input("유저 닉네임 입력 : ")
+def GetNickNum(nick):
     url = "https://open-api.bser.io/v1/user/nickname?query=%s"%(nick)
 
     response = requests.get(url, headers=headers)
