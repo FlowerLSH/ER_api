@@ -54,6 +54,6 @@ def GetUserRank():
 def GetUserStats():
     userNum = int(input("유저 번호 입력 : "))
     url = "https://open-api.bser.io/v1/user/games/%d"%(userNum)
-
-response = requests.get(url, headers = headers)
-print(response.text)
+    
+    response = requests.get(url, headers = headers)
+    print(response.text)
