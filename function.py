@@ -21,10 +21,7 @@ def GetNickNum(nick):
         print(response.text)
 
 #유저 id로 닉네임, mmr, 랭킹 출력
-def GetUserRank():
-    UserNum = int(input("유저 넘버 입력 : "))
-    season = int(input("시즌 입력 : "))
-    Team = int(input("모드 입력(1. 솔로 , 2. 듀오, 3. 스쿼드) : "))
+def GetUserRank(UserNum, season, Team):
     
     url = "https://open-api.bser.io/v1/rank/%d/%d/%d"%(UserNum, season, Team)
 
@@ -50,8 +47,7 @@ def GetUserRank():
         print(response.text)
 
 #유저 통계 획득(통계가 매우 기므로 주의)
-def GetUserStats():
-    userNum = int(input("유저 번호 입력 : "))
+def GetUserStats(userNum):
     url = "https://open-api.bser.io/v1/user/games/%d"%(userNum)
     
     response = requests.get(url, headers = headers)
