@@ -1,5 +1,8 @@
-import function_matchs as fm
-import function_stats as fs
+from function_stats import function_stats as fs
+
+api_key = ""
 
 nick = "하얀수수깡"
-fs.GetNickNum(nick)
+test = fs(api_key)
+
+print(test.GetTopRankers())
