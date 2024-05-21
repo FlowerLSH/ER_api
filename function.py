@@ -52,3 +52,10 @@ def GetUserStats(userNum):
     
     response = requests.get(url, headers = headers)
     print(response.text)
+
+#시즌 번호, 매칭 모드(솔로,듀오, 스쿼드) 입력하고 탑 1000 확인
+def GetTopRankers(season, team):
+    url = "https://open-api.bser.io/v1/rank/top/%d/%d"%(season, team)
+
+    response = requests.get(url, headers= headers)
+    print(response.text)
