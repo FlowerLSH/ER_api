@@ -5,4 +5,4 @@ api_key = ""
 nick = "하얀수수깡"
 test = fs(api_key)
 
-print(test.GetTopRankers())
+print(test.GetNickNum(nick))

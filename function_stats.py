@@ -1,26 +1,19 @@
 import requests
 import json
+from function_base import function_Base
 
-class function_stats:
+class function_stats(function_Base):
     def __init__(self, api_key):
-        self.api_key = {"x-api-key" : api_key}
+        super().__init__(api_key)
 
     def GetNickNum(self, nick):
         url = "https://open-api.bser.io/v1/user/nickname?query=%s"%(nick)
 
         response = requests.get(url, headers=self.api_key)
+        data = self.CheckStatus(response)
 
-        if response.status_code == 200:
-            data = response.json()
-            if 'user' in data:
-                user_id = data['user']['userNum']
-                return user_id
-            else:
-                print("해당 닉네임의 유저를 찾을 수 없습니다.")
-        else:
-            print("API 요청 실패:", response.status_code)
-            print(response.text)
-            return None
+        user_id = data['user']['userNum']
+        return user_id
 
     #유저 id로 닉네임, mmr, 랭킹 출력
     """
@@ -35,47 +28,37 @@ class function_stats:
 
         response = requests.get(url, headers = self.api_key)
 
-        if response.status_code == 200:
-            data = response.json()
-            
-            if 'userRank' in data:
-                user_rank = data['userRank']
-                user = user_rank.get('nickname')
-                mmr = user_rank.get('mmr')
-                rank = user_rank.get('rank')
-                print("User:", user)
-                print("MMR:", mmr)
-                print("Rank:", rank)
+        data = self.CheckStatus(response)
+        user_rank = data['userRank']
+        user = user_rank.get('nickname')
+        mmr = user_rank.get('mmr')
+        rank = user_rank.get('rank')
 
-                match getinfo:
-                    case 0:
-                        return user, mmr, rank
-                    case 1:
-                        return user
-                    case 2:
-                        return mmr
-                    case 3:
-                        return rank
-                    case _:
-                        print("getinfo값은 0~3 사이의 값이어야 합니다.")
-            else:
-                print("해당 유저의 랭크 정보를 찾을 수 없습니다.")
+        match getinfo:
+            case 0:
+                return user, mmr, rank
+            case 1:
+                return user
+            case 2:
+                return mmr
+            case 3:
+                return rank
+            case _:
+                print("getinfo값은 0~3 사이의 값이어야 합니다.")
 
-        else:
-            print("API 요청 실패:", response.status_code)
-            print(response.text)
-            return None
 
     #유저 통계 획득(통계가 매우 기므로 주의)
     def GetUserStats(self, userNum):
         url = "https://open-api.bser.io/v1/user/games/%d"%(userNum)
         
         response = requests.get(url, headers = self.api_key)
-        print(response.text)
+        data = self.CheckStatus(response)
+        print(json.dumps(data, ensure_ascii=False, indent=3))
 
     #시즌 번호, 매칭 모드(솔로,듀오, 스쿼드) 입력하고 탑 1000 확인
     def GetTopRankers(self, season, team = 3):
         url = "https://open-api.bser.io/v1/rank/top/%d/%d"%(season, team)
 
         response = requests.get(url, headers= self.api_key)
-        print(response.text)
+        data = self.CheckStatus(response)
+        print(json.dumps(data, ensure_ascii=False, indent=3))
