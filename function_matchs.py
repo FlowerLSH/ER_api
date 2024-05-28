@@ -13,8 +13,7 @@ class function_matchs(function_Base):
     
     def GetMatchResult(self, gameID): #gameID 입력해서 해당 게임의 모든 플레이어의 데이터 획득
         url = "https://open-api.bser.io/v1/games/%d"%(gameID)
-        headers = {'x-api-key': self.api_key}
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self.api_key)
         data = self.CheckStatus(response)
         print(json.dumps(data, ensure_ascii=False, indent=3))
         
